@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import CardList from "../components/CardList";
 import Search from '../components/SearchBar'
 import Scroll from '../components/Scroll'
+import ErrorBoundary from "../components/ErrorBoundary";
 import './App.css';
 
 
@@ -40,7 +41,10 @@ class App extends Component{
             <h1 className="f1">Pokemon World</h1>
             <Search searchChange={this.onSearchChange}/>
             <Scroll>
-            <CardList pokemon={filterChange} />
+                <ErrorBoundary>
+                <CardList pokemon={filterChange} />
+                </ErrorBoundary>
+            
             </Scroll>
         </div>   
         );

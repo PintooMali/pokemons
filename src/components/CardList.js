@@ -2,7 +2,7 @@ import React from "react";
 import Card from "./pokemon";
 
 const CardList=({pokemon})=>{
-  
+ 
     return(
     <div>
         {pokemon.map((list,i)=>{
