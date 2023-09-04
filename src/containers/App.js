@@ -1,4 +1,4 @@
-import React,{Component} from "react";
+import React,{useState,useEffect} from "react";
 import CardList from "../components/CardList";
 import Search from '../components/SearchBar'
 import Scroll from '../components/Scroll'
@@ -6,40 +6,53 @@ import ErrorBoundary from "../components/ErrorBoundary";
 import './App.css';
 
 
-class App extends Component{
-    constructor(){
-        super();
-        this.state={
-            pokemon:[],
-            searchField:''
-        }
-    }
-    componentDidMount(){
-        fetch('https://my-json-server.typicode.com/pintoomali/git-test/user')
-        .then(response=>{return response.json();})
-        .then(user=>{
-            this.setState({pokemon:user})
-        })
-      
-    }
+ function App(){
+    // constructor(){
+    //     super();
+    //     this.state={
+    //         pokemon:[],
+    //         searchField:''
+    //     }
+    // }
 
-    onSearchChange=(event)=>{
-        this.setState({searchField:event.target.value})
+    const [pokemon,setPokemon] = useState([]);
+    const [searchfield,setSearchfield] = useState('');
+    
+        // fetch('https://my-json-server.typicode.com/pintoomali/git-test/user')
+        // .then(response=>{return response.json();})
+        // .then(user=>{
+        //     setPokemon(user)
+        // })
+
+        let i=0;
+       useEffect(()=>{
+              fetch('https://my-json-server.typicode.com/pintoomali/pokemons/pokemon')
+        .then(response=>{return response.json();})
+        .then(pokemon=>{
+            setPokemon(pokemon)
+            i++;
+            console.log(i)
+        })
+       },[])
+
+
+    const onSearchChange=(event)=>{
+        setSearchfield(event.target.value)
         
     }
 
 
-    render(){
-        const {pokemon,searchField}=this.state;
+    
+        // const {pokemon,searchField}=this.state;
         const filterChange=pokemon.filter(pokemon=>{
-            return pokemon.name.toLowerCase().includes(searchField.toLowerCase());
+            return pokemon.name.toLowerCase().includes(searchfield.toLowerCase());
         })
         return !pokemon.length?
             <h1>Loading</h1>:
 
             (<div className="tc">
             <h1 className="f1">Pokemon World</h1>
-            <Search searchChange={this.onSearchChange}/>
+            <Search searchChange={onSearchChange}/>
             <Scroll>
                 <ErrorBoundary>
                 <CardList pokemon={filterChange} />
@@ -50,7 +63,7 @@ class App extends Component{
         );
      
         
-    }
+
   
 }
 export default App;
