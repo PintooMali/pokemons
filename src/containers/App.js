@@ -26,7 +26,7 @@ import './App.css';
 
         let i=0;
        useEffect(()=>{
-              fetch('https://my-json-server.typicode.com/pintoomali/pokemons/pokemon')
+              fetch('https://my-json-server.typicode.com/pintoomali/pokemon_data/pokemon')
         .then(response=>{return response.json();})
         .then(pokemon=>{
             setPokemon(pokemon)
